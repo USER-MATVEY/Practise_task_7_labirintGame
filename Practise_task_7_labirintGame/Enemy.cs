@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Practise_task_7_labirintGame
 {
-    internal class Player
+    internal class Enemy
     {
         private int positionX;
         private int positionY;
@@ -14,47 +14,59 @@ namespace Practise_task_7_labirintGame
         public int X { get { return positionX; } set { positionX = value; } }
         public int Y { get { return positionY; } set { positionY = value; } }
 
-        public Player()
+        public Enemy(int positionX, int positionY)
         {
-            positionX = 0;
-            positionY = 0;
+            this.positionX = positionX;
+            this.positionY = positionY;
         }
 
-        public void MoveUp(Labirint labirint)
+        public void MoveChoice(Labirint labirint)
+        {
+            Random random = new Random();
+            switch (random.Next(0, 4))
+            {
+                case 0: MoveUp(labirint); break;
+                case 1: MoveDown(labirint); break;
+                case 2: MoveLeft(labirint); break;
+                case 3: MoveRight(labirint); break;
+            }
+        }
+
+        void MoveUp(Labirint labirint)
         {
             if (CanMove(labirint, positionX - 1, positionY))
             {
                 labirint.map[positionX, positionY] = ' ';
                 positionX--;
-                labirint.map[positionX, positionY] = '■';
+                labirint.map[positionX, positionY] = '¤';
             }
         }
 
-        public void MoveDown(Labirint labirint)
+        void MoveDown(Labirint labirint)
         {
             if (CanMove(labirint, positionX + 1, positionY))
             {
                 labirint.map[positionX, positionY] = ' ';
                 positionX++;
-                labirint.map[positionX, positionY] = '■';
+                labirint.map[positionX, positionY] = '¤';
             }
         }
-        public void MoveLeft(Labirint labirint)
+        void MoveLeft(Labirint labirint)
         {
             if (CanMove(labirint, positionX, positionY - 1))
             {
                 labirint.map[positionX, positionY] = ' ';
                 positionY--;
-                labirint.map[positionX, positionY] = '■';
+                labirint.map[positionX, positionY] = '¤';
             }
         }
-        public void MoveRight(Labirint labirint)
+        void MoveRight(Labirint labirint)
         {
             if (CanMove(labirint, positionX, positionY + 1))
             {
                 labirint.map[positionX, positionY] = ' ';
                 positionY++;
-                labirint.map[positionX, positionY] = '■';
+                labirint.map[positionX, positionY] = '¤';
             }
         }
 
@@ -62,7 +74,7 @@ namespace Practise_task_7_labirintGame
         {
             if (posY == 0 || posX == 0) return false;
             else if (posY == labirint.map.GetLength(0) || posX == labirint.map.GetLength(1)) return false;
-            else if (labirint.map[posX, posY] == ' ' || labirint.map[posX, posY] == '·') return true;
+            else if (labirint.map[posX, posY] == ' ') return true;
             return false;
         }
     }

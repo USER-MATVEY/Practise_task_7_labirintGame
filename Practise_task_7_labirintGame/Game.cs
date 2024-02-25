@@ -10,11 +10,14 @@ namespace Practise_task_7_labirintGame
 
             int positionX;
             int positionY;
+            int exitX;
+            int exitY;
 
             Player player = new Player();
             Labirint labirint = new Labirint();
+            List<Enemy> enemies = new List<Enemy>();
 
-            labirint.ReadMap("level01", out positionX, out positionY);
+            labirint.ReadMap("level01", out positionX, out positionY, out enemies, out exitX, out exitY);
 
             player.X = positionX;
             player.Y = positionY;
@@ -41,7 +44,16 @@ namespace Practise_task_7_labirintGame
                 {
                     player.MoveRight(labirint);
                 }
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    enemies[i].MoveChoice(labirint);
+                }
+                if (player.X == exitX &&  player.Y == exitY)
+                {
+                    break;
+                }
             }
+            Console.WriteLine("\n\nВы Выйграли!!!");
         }
     }
 }
